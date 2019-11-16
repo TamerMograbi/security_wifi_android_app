@@ -39,10 +39,10 @@ public class MobileArrayAdapter extends ArrayAdapter<String> {
             imageView.setImageResource(R.drawable.signal1_bar_wifi);
             lockImageView.setImageResource(R.drawable.lock);
         } else if (s.equals("cafe")) {
-            lockImageView.setImageResource(R.drawable.lock);
             imageView.setImageResource(R.drawable.signal4_bar_wifi);
         } else if (s.equals("cafe_guest")) {
             imageView.setImageResource(R.drawable.signal1_bar_wifi);
+            lockImageView.setImageResource(R.drawable.lock);
         } else {
             imageView.setImageResource(R.drawable.signal0_bar_wifi);
         }
