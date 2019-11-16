@@ -33,7 +33,7 @@ public class MainActivity extends ListActivity {
         Log.d("myTag", "position " + position);
         //get selected items
         String selectedValue = (String) getListAdapter().getItem(position-1);
-        Toast.makeText(this, selectedValue, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "connected to " + selectedValue, Toast.LENGTH_SHORT).show();
 
     }
 }

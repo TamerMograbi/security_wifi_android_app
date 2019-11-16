@@ -16,10 +16,21 @@
 
     <TextView
         android:id="@+id/label"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@+id/label"
+
         android:textSize="60px" >
     </TextView>
+
+    <ImageView
+        android:id="@+id/lock"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:layout_marginLeft="200dp"
+        android:layout_marginRight="20px"
+        android:layout_marginTop="5px"
+        android:src="@drawable/wifi_one_bar" >
+    </ImageView>
 
 </LinearLayout>

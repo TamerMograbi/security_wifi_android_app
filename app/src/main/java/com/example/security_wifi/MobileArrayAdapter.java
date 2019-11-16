@@ -26,7 +26,9 @@ public class MobileArrayAdapter extends ArrayAdapter<String> {
         View rowView = inflater.inflate(R.layout.list_wifis, parent, false);
         TextView textView = (TextView) rowView.findViewById(R.id.label);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.logo);
+        ImageView lockImageView = rowView.findViewById(R.id.lock);
         textView.setText(values[position]);
+        lockImageView.setImageResource(0); //we clear the default image which is whatever is in list_wifis.xml
 
         // Change icon based on name
         String s = values[position];
@@ -35,7 +37,9 @@ public class MobileArrayAdapter extends ArrayAdapter<String> {
 
         if (s.equals("eduroam")) {
             imageView.setImageResource(R.drawable.wifi_one_bar);
+            lockImageView.setImageResource(R.drawable.lock);
         } else if (s.equals("cafe")) {
+            lockImageView.setImageResource(R.drawable.lock);
             imageView.setImageResource(R.drawable.ic_launcher_background);
         } else if (s.equals("cafe_guest")) {
             imageView.setImageResource(R.drawable.wifi_one_bar);
