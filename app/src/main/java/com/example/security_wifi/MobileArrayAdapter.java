@@ -36,15 +36,15 @@ public class MobileArrayAdapter extends ArrayAdapter<String> {
         System.out.println(s);
 
         if (s.equals("eduroam")) {
-            imageView.setImageResource(R.drawable.wifi_one_bar);
+            imageView.setImageResource(R.drawable.signal1_bar_wifi);
             lockImageView.setImageResource(R.drawable.lock);
         } else if (s.equals("cafe")) {
             lockImageView.setImageResource(R.drawable.lock);
-            imageView.setImageResource(R.drawable.ic_launcher_background);
+            imageView.setImageResource(R.drawable.signal4_bar_wifi);
         } else if (s.equals("cafe_guest")) {
-            imageView.setImageResource(R.drawable.wifi_one_bar);
+            imageView.setImageResource(R.drawable.signal1_bar_wifi);
         } else {
-            imageView.setImageResource(R.drawable.ic_launcher_background);
+            imageView.setImageResource(R.drawable.signal0_bar_wifi);
         }
 
         return rowView;

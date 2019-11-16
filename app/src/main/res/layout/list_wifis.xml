@@ -11,7 +11,7 @@
         android:layout_marginLeft="5px"
         android:layout_marginRight="20px"
         android:layout_marginTop="5px"
-        android:src="@drawable/wifi_one_bar" >
+        android:src="@drawable/signal1_bar_wifi" >
     </ImageView>
 
     <TextView
@@ -30,7 +30,7 @@
         android:layout_marginLeft="200dp"
         android:layout_marginRight="20px"
         android:layout_marginTop="5px"
-        android:src="@drawable/wifi_one_bar" >
+        android:src="@drawable/signal1_bar_wifi" >
     </ImageView>
 
 </LinearLayout>

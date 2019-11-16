@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:contentDescription="wifi strength for row 1"
-        app:srcCompat="@drawable/wifi_one_bar" />
+        app:srcCompat="@drawable/signal1_bar_wifi" />
 
     <LinearLayout
         android:id="@+id/row1"
