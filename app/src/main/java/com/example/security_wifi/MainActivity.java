@@ -1,28 +1,39 @@
 package com.example.security_wifi;
 
 import android.os.Bundle;
-import android.app.Activity;
-import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.app.ListActivity;
 import android.widget.ListView;
+import android.widget.Toast;
+import android.view.View;
+import android.widget.TextView;
+import android.util.Log;
 
-public class MainActivity extends Activity {
-    // Array of strings...
-    String[] wifiArray = {"eduroam","Fios-P8AAE","NETGEAR-Guest","Cafe",
-            "Cafe-guest","Cafe-5G","xfinity","HP printer"};
+public class MainActivity extends ListActivity {
+
+    static final String[] wifi_names =
+            new String[]{"eduroam", "cafe", "cafe_guest", "cafe_5G"};
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,
-                R.layout.activity_listview, wifiArray);
+        setListAdapter(new MobileArrayAdapter(this, wifi_names));
+        TextView textView = new TextView(this);
+        textView.setText("Available connections");
+        textView.setHeight(200);
+        textView.setTextSize(30);
 
-        ListView listView = (ListView) findViewById(R.id.wifi_list);
-        Log.d("myTag", "this will show up in logcat");
+        this.getListView().addHeaderView(textView);
 
+    }
 
-        listView.setAdapter(adapter);
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+
+        Log.d("myTag", "position " + position);
+        //get selected items
+        String selectedValue = (String) getListAdapter().getItem(position-1);
+        Toast.makeText(this, selectedValue, Toast.LENGTH_SHORT).show();
+
     }
 }
