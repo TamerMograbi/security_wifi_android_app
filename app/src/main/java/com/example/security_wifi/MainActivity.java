@@ -54,6 +54,9 @@ public class MainActivity extends ListActivity {
 
         Log.d("myTag", "position " + position);
         //get selected items
+        if(position == 0) {
+            return ;
+        }
         String selectedValue = (String) getListAdapter().getItem(position-1);
         Toast.makeText(this, "connected to " + selectedValue, Toast.LENGTH_SHORT).show();
 
