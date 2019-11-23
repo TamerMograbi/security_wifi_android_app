@@ -1,7 +1,9 @@
 package com.example.security_wifi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.ListActivity;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.view.View;
@@ -11,18 +13,12 @@ import java.net.URISyntaxException;
 
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
-import com.android.volley.toolbox.Volley;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+
 import org.json.*;
 
 public class MainActivity extends ListActivity {
     private Socket mSocket;
+    Button button;
     {
         try {
             //try to visit this url on your laptop and see that clicking on a wifi updates
@@ -37,6 +33,7 @@ public class MainActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         mSocket.connect();
 
         setListAdapter(new MobileArrayAdapter(this, wifi_names));
@@ -46,6 +43,23 @@ public class MainActivity extends ListActivity {
         textView.setTextSize(30);
 
         this.getListView().addHeaderView(textView);
+        addListenerOnButton();
+    }
+
+    public void addListenerOnButton() {
+
+        button = (Button) findViewById(R.id.button1);
+
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                //i want this to start qr code scanner
+                Intent intent = new Intent(MainActivity.this, QrActivity.class);
+                startActivity(intent);
+            }
+
+        });
 
     }
 
@@ -84,6 +98,9 @@ public class MainActivity extends ListActivity {
         }
 
         mSocket.emit("news",colorsObj);
+
+
+
 //below is code for an http request. it works but using sockets is easier
 /*        // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
