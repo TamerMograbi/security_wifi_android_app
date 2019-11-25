@@ -27,18 +27,50 @@ public class FirstScenario extends ListActivity {
     String wifi_password;
 
     String selectedValue;
-    
+
+    /*
+    1&2- We will start with no defense on both wifi lists.
+    3- Blinking defense on wifi_names
+    4- Color defense on wifi_names with red added to the first element on the list
+    5- Color defense on wifi_names3
+    6- QR code on wifi_names
+     */
+
     static final String[] wifi_names =
-            new String[]{"BoardAndBrew", "xfinitywifi", "BoardAndBrew", "XFINITY", "Employees"};
+            new String[]{"BoardAndBrew", "xfinitywifi", "BoardAndBrew", "public_wifi", "XFINITY", "Employees"};
+
+    static final String[] wifi_names2 =
+            new String[]{"BoardAndBrew_5G", "xfinitywifi", "BoardAndBrew", "XFINITY", "Employees"};
+
+    static final String[] wifi_names3 =
+            new String[]{"BoardAndBrew", "xfinitywifi", "BoardAndBrew", "BoardAndBrew_guest",  "Employees", "XFINITY"};
 
     static final int[] wifi_strengths =
-            new int[]{3, 3, 2, 2, 2};
+            new int[]{3, 3, 2, 2, 2, 2};
+
+    static final int[] wifi_strengths2 =
+            new int[]{4, 3, 3, 2, 2, 2};
+
+    static final int[] wifi_strengths3 =
+            new int[]{4, 3, 3, 2, 2, 1};
 
     static final boolean[] wifi_private =
-            new boolean[]{true, false, true, true, true};
+            new boolean[]{true, false, true, false, true, true};
+
+    static final boolean[] wifi_private2 =
+            new boolean[]{false, false, true, true, true};
+
+    static final boolean[] wifi_private3 =
+            new boolean[]{true, false, true, false, true, true};
 
     static final String[] wifi_passwords =
-            new String[]{"games471", "", "games471", "gsafjaslfk", "gfdlskafdla"};
+            new String[]{"games471", "", "games471", "", "gsafjaslfk", "gfdlskafdla"};
+
+    static final String[] wifi_passwords2 =
+            new String[]{"", "", "games471", "gsafjaslfk", "gfdlskafdla"};
+
+    static final String[] wifi_passwords3 =
+            new String[]{"games471", "", "games471", "", "gsafjaslfk", "gfdlskafdla"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +100,8 @@ public class FirstScenario extends ListActivity {
                 if(password_input.equals(wifi_password))
                 {
                     Toast.makeText(getApplicationContext(), "connected to " + selectedValue, Toast.LENGTH_SHORT).show();
+                    //Intent intent = new Intent(FirstScenario.this, SecondScenario.class);
+                    //startActivity(intent);
                 }
             }
         });
