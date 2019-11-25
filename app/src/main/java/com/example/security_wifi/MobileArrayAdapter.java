@@ -11,11 +11,15 @@ import android.widget.TextView;
 public class MobileArrayAdapter extends ArrayAdapter<String> {
     private final Context context;
     private final String[] values;
+    private final int[] strength;
+    private final boolean[] locked;
 
-    public MobileArrayAdapter(Context context, String[] values) {
+    public MobileArrayAdapter(Context context, String[] values, int[] strength, boolean[] locked) {
         super(context, R.layout.list_wifis, values);
         this.context = context;
         this.values = values;
+        this.strength = strength;
+        this.locked = locked;
     }
 
     @Override
@@ -32,9 +36,12 @@ public class MobileArrayAdapter extends ArrayAdapter<String> {
 
         // Change icon based on name
         String s = values[position];
+        int wifi_strength = strength[position];
+        boolean isLocked = locked[position];
 
         System.out.println(s);
 
+        /*
         if (s.equals("eduroam")) {
             imageView.setImageResource(R.drawable.signal1_bar_wifi);
             lockImageView.setImageResource(R.drawable.lock);
@@ -45,6 +52,34 @@ public class MobileArrayAdapter extends ArrayAdapter<String> {
             lockImageView.setImageResource(R.drawable.lock);
         } else {
             imageView.setImageResource(R.drawable.signal0_bar_wifi);
+        }
+         */
+
+        switch (wifi_strength){
+            case 0:
+                imageView.setImageResource(R.drawable.signal0_bar_wifi);
+                break;
+
+            case 1:
+                imageView.setImageResource(R.drawable.signal1_bar_wifi);
+                break;
+
+            case 2:
+                imageView.setImageResource(R.drawable.signal2_bar_wifi);
+                break;
+
+            case 3:
+                imageView.setImageResource(R.drawable.signal3_bar_wifi);
+                break;
+
+            case 4:
+                imageView.setImageResource(R.drawable.signal4_bar_wifi);
+                break;
+        }
+
+        if(isLocked)
+        {
+            lockImageView.setImageResource(R.drawable.lock);
         }
 
         return rowView;

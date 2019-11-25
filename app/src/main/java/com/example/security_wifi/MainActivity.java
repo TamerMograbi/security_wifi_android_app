@@ -19,6 +19,8 @@ import org.json.*;
 public class MainActivity extends ListActivity {
     private Socket mSocket;
     Button button;
+    Button next_button;
+
     {
         try {
             //try to visit this url on your laptop and see that clicking on a wifi updates
@@ -30,13 +32,19 @@ public class MainActivity extends ListActivity {
     static final String[] wifi_names =
             new String[]{"eduroam", "cafe", "cafe_guest", "cafe_5G"};
 
+    static final int[] wifi_strengths =
+            new int[]{0, 1, 2, 3};
+
+    static final boolean[] wifi_private =
+            new boolean[]{true, false, false, true};
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mSocket.connect();
 
-        setListAdapter(new MobileArrayAdapter(this, wifi_names));
+        setListAdapter(new MobileArrayAdapter(this, wifi_names, wifi_strengths, wifi_private));
         TextView textView = new TextView(this);
         textView.setText("Available connections");
         textView.setHeight(200);
@@ -61,7 +69,19 @@ public class MainActivity extends ListActivity {
 
         });
 
+        next_button = (Button) findViewById(R.id.button2);
+
+        next_button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(MainActivity.this, FirstScenario.class);
+                startActivity(intent);
+            }
+        });
+
     }
+
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
