@@ -98,6 +98,9 @@ public class FifthScenario extends ListActivity {
                     Intent intent = new Intent(FifthScenario.this, SixthPrompt.class);
                     startActivity(intent);
                 }
+                else {
+                    Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -51,13 +51,6 @@ public class SixthScenario extends ListActivity {
         } catch (URISyntaxException e) { Log.d("myTag", "failed to connect");}
     }
 
-    /*
-    1&2- We will start with no defense on both wifi lists.
-    3- Blinking defense on wifi_names
-    4- Color defense on wifi_names with red added to the first element on the list
-    5- Color defense on wifi_names3
-    6- QR code on wifi_names
-     */
 
     static final String[] wifi_names =
             new String[]{"BoardAndBrew", "xfinitywifi", "BoardAndBrew", "public_wifi", "XFINITY", "Employees"};
@@ -77,7 +70,7 @@ public class SixthScenario extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scenario1);
+        setContentView(R.layout.activity_sixth_scenario);
 
         mSocket.connect();
         tStart = System.currentTimeMillis();
@@ -107,6 +100,9 @@ public class SixthScenario extends ListActivity {
                     Toast.makeText(getApplicationContext(), "connected to " + selectedValue, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SixthScenario.this, EndScreen.class);
                     startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -173,13 +169,14 @@ public class SixthScenario extends ListActivity {
 
     public void addListenerOnButton() {
 
-        button = findViewById(R.id.button1);
+        button = findViewById(R.id.qrButton);
 
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
                 //i want this to start qr code scanner
+                sendElapsedToServer();
                 Intent intent = new Intent(SixthScenario.this, QrActivity.class);
                 startActivity(intent);
             }

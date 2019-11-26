@@ -100,6 +100,9 @@ public class FourthScenario extends ListActivity {
                     Intent intent = new Intent(FourthScenario.this, FifthPrompt.class);
                     startActivity(intent);
                 }
+                else {
+                    Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -4,9 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -69,6 +69,8 @@ public class QrActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        sendElapsedToServer();
+                        /*
                         new AlertDialog.Builder(QrActivity.this)
                                 .setTitle("You connected to")
                                 .setMessage("BoardAndBrew")
@@ -82,10 +84,15 @@ public class QrActivity extends AppCompatActivity {
                                 //.setNegativeButton(android.R.string.no, null)
                                 //.setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
+*/
+                        Toast.makeText(getApplicationContext(), "connected to BoardAndBrew", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(QrActivity.this, EndScreen.class);
+                        startActivity(intent);
                     }
                 });
             }
         });
+
 
         scannerView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +131,7 @@ public class QrActivity extends AppCompatActivity {
         long tEnd = System.currentTimeMillis();
         long tDelta = tEnd - tStart;
         double elapsedSeconds = tDelta / 1000.0;
-        Log.d("myTag", "took  " + elapsedSeconds + " time to complete scenario 6");
+        Log.d("myTag", "took  " + elapsedSeconds + " time to complete QR scan");
         JSONObject jsonObject = new JSONObject();
 
         try {

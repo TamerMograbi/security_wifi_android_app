@@ -100,6 +100,9 @@ public class SecondScenario extends ListActivity {
                     Intent intent = new Intent(SecondScenario.this, ThirdPrompt.class);
                     startActivity(intent);
                 }
+                else {
+                    Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
