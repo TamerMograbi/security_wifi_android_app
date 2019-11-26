@@ -10,23 +10,46 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 import com.google.zxing.Result;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URISyntaxException;
 
 public class QrActivity extends AppCompatActivity {
     private static final int RC_PERMISSION = 10;
     private CodeScanner mCodeScanner;
     private boolean mPermissionGranted;
 
+    private Socket mSocket;
+
+    long tStart;
+
+    {
+        try {
+            //try to visit this url on your laptop and see that clicking on a wifi updates
+            //this page
+            mSocket = IO.socket("https://murmuring-wildwood-99815.herokuapp.com/");
+        } catch (URISyntaxException e) { Log.d("myTag", "failed to connect");}
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
+
+        mSocket.connect();
+        tStart = System.currentTimeMillis();
 
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -48,15 +71,16 @@ public class QrActivity extends AppCompatActivity {
                     public void run() {
                         new AlertDialog.Builder(QrActivity.this)
                                 .setTitle("You connected to")
-                                .setMessage(result.getText())
+                                .setMessage("BoardAndBrew")
+                                //.setMessage(result.getText())
 
                                 // Specifying a listener allows you to take an action before dismissing the dialog.
                                 // The dialog is automatically dismissed when a dialog button is clicked.
-                                .setPositiveButton(android.R.string.yes, null)
+                                //.setPositiveButton(android.R.string.yes, null)
 
                                 // A null listener allows the button to dismiss the dialog and take no further action.
-                                .setNegativeButton(android.R.string.no, null)
-                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                //.setNegativeButton(android.R.string.no, null)
+                                //.setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
                     }
                 });
@@ -94,5 +118,21 @@ public class QrActivity extends AppCompatActivity {
     protected void onPause() {
         mCodeScanner.releaseResources();
         super.onPause();
+    }
+
+    public void sendElapsedToServer() {
+        long tEnd = System.currentTimeMillis();
+        long tDelta = tEnd - tStart;
+        double elapsedSeconds = tDelta / 1000.0;
+        Log.d("myTag", "took  " + elapsedSeconds + " time to complete scenario 6");
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("QR time",elapsedSeconds);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mSocket.emit("elapsed",jsonObject);
+
     }
 }

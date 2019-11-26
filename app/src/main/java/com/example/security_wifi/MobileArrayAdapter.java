@@ -13,17 +13,19 @@ public class MobileArrayAdapter extends ArrayAdapter<String> {
     private final String[] values;
     private final int[] strength;
     private final boolean[] locked;
+    private final int[] wifi_safety;
 
-    public MobileArrayAdapter(Context context, String[] values, int[] strength, boolean[] locked) {
+    public MobileArrayAdapter(Context context, String[] values, int[] strength, boolean[] locked, int[] wifi_safety) {
         super(context, R.layout.list_wifis, values);
         this.context = context;
         this.values = values;
         this.strength = strength;
         this.locked = locked;
+        this.wifi_safety = wifi_safety;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position,  View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -31,6 +33,7 @@ public class MobileArrayAdapter extends ArrayAdapter<String> {
         TextView textView = (TextView) rowView.findViewById(R.id.label);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.logo);
         ImageView lockImageView = rowView.findViewById(R.id.lock);
+        ImageView dotImageView = rowView.findViewById(R.id.colorDot);
         textView.setText(values[position]);
         lockImageView.setImageResource(0); //we clear the default image which is whatever is in list_wifis.xml
 
@@ -38,6 +41,7 @@ public class MobileArrayAdapter extends ArrayAdapter<String> {
         String s = values[position];
         int wifi_strength = strength[position];
         boolean isLocked = locked[position];
+        int safety = wifi_safety[position];
 
         System.out.println(s);
 
@@ -80,6 +84,24 @@ public class MobileArrayAdapter extends ArrayAdapter<String> {
         if(isLocked)
         {
             lockImageView.setImageResource(R.drawable.lock);
+        }
+
+        switch (safety){
+            case 0:
+                break;
+
+            case 1:
+                dotImageView.setImageResource(R.drawable.reddot);
+                break;
+
+            case 2:
+                dotImageView.setImageResource(R.drawable.yellowdot);
+                break;
+
+            case 3:
+                dotImageView.setImageResource(R.drawable.greendot);
+                break;
+
         }
 
         return rowView;

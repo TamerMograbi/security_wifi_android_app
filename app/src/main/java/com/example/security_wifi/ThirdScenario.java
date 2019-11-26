@@ -42,6 +42,8 @@ public class ThirdScenario extends ListActivity {
 
     String selectedValue;
 
+    int selectedStrength;
+
     private Socket mSocket;
 
     View blinker;
@@ -66,7 +68,10 @@ public class ThirdScenario extends ListActivity {
             new boolean[]{true, false, true, false, true, true};
 
     static final String[] wifi_passwords =
-            new String[]{"games471", "", "games471", "", "gsafjaslfk", "gfdlskafdla"};
+            new String[]{"secret150", "", "secret150", "", "gsafjaslfk", "gfdlskafdla"};
+
+    static final int[] wifi_safety =
+            new int[]{0,0,0,0,0,0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +83,7 @@ public class ThirdScenario extends ListActivity {
         final View blinker = findViewById(R.id.blinker);
         blinker.setVisibility(View.INVISIBLE);
 
-        final MobileArrayAdapter adapter = new MobileArrayAdapter(this, wifi_names, wifi_strengths, wifi_private);
+        final MobileArrayAdapter adapter = new MobileArrayAdapter(this, wifi_names, wifi_strengths, wifi_private, wifi_safety);
         setListAdapter(adapter);
         getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
@@ -155,8 +160,6 @@ public class ThirdScenario extends ListActivity {
         textView.setTextSize(30);
 
         this.getListView().addHeaderView(textView);
-        addListenerOnButton();
-
 
 
 
@@ -176,8 +179,8 @@ public class ThirdScenario extends ListActivity {
                     Toast.makeText(getApplicationContext(), "connected to " + selectedValue, Toast.LENGTH_SHORT).show();
                     sendElapsedToServer();
 
-                    //Intent intent = new Intent(FirstScenario.this, SecondScenario.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(ThirdScenario.this, FourthPrompt.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -199,7 +202,12 @@ public class ThirdScenario extends ListActivity {
         Log.d("myTag", "took  " + elapsedSeconds + " time to complete scenario 3");
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("scenario 3",elapsedSeconds);
+            jsonObject.put("scenario 3 wifi", selectedValue + " " + selectedStrength);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            jsonObject.put("scenario 3 time",elapsedSeconds);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -207,24 +215,11 @@ public class ThirdScenario extends ListActivity {
 
     }
 
-    public void addListenerOnButton() {
-
-        button = (Button) findViewById(R.id.button1);
-
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                //i want this to start qr code scanner
-                Intent intent = new Intent(ThirdScenario.this, QrActivity.class);
-                startActivity(intent);
-            }
-
-        });
-    }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
+
+
 
         Log.d("myTag", "position " + position);
         //get selected items
@@ -232,10 +227,13 @@ public class ThirdScenario extends ListActivity {
             return;
         }
         selectedValue = (String) getListAdapter().getItem(position - 1);
+        selectedStrength = wifi_strengths[position - 1];
 
         if(!wifi_private[position-1]) {
             Toast.makeText(this, "connected to " + selectedValue, Toast.LENGTH_SHORT).show();
             sendElapsedToServer();
+            Intent intent = new Intent(ThirdScenario.this, FourthPrompt.class);
+            startActivity(intent);
         }
 
         else{

@@ -1,5 +1,7 @@
 package com.example.security_wifi;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -21,9 +23,9 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
+public class SixthScenario extends ListActivity {
 
-public class FirstScenario extends ListActivity {
-
+    Button button;
 
     EditText input;
 
@@ -60,38 +62,14 @@ public class FirstScenario extends ListActivity {
     static final String[] wifi_names =
             new String[]{"BoardAndBrew", "xfinitywifi", "BoardAndBrew", "public_wifi", "XFINITY", "Employees"};
 
-    static final String[] wifi_names2 =
-            new String[]{"BoardAndBrew_5G", "xfinitywifi", "BoardAndBrew", "XFINITY", "Employees"};
-
-    static final String[] wifi_names3 =
-            new String[]{"BoardAndBrew", "xfinitywifi", "BoardAndBrew", "BoardAndBrew_guest",  "Employees", "XFINITY"};
-
     static final int[] wifi_strengths =
             new int[]{3, 3, 2, 2, 2, 2};
-
-    static final int[] wifi_strengths2 =
-            new int[]{4, 3, 3, 2, 2, 2};
-
-    static final int[] wifi_strengths3 =
-            new int[]{4, 3, 3, 2, 2, 1};
 
     static final boolean[] wifi_private =
             new boolean[]{true, false, true, false, true, true};
 
-    static final boolean[] wifi_private2 =
-            new boolean[]{false, false, true, true, true};
-
-    static final boolean[] wifi_private3 =
-            new boolean[]{true, false, true, false, true, true};
-
     static final String[] wifi_passwords =
-            new String[]{"games471", "", "games471", "", "gsafjaslfk", "gfdlskafdla"};
-
-    static final String[] wifi_passwords2 =
-            new String[]{"", "", "games471", "gsafjaslfk", "gfdlskafdla"};
-
-    static final String[] wifi_passwords3 =
-            new String[]{"games471", "", "games471", "", "gsafjaslfk", "gfdlskafdla"};
+            new String[]{"dontgivethemthepassword", "", "dontgivethemthepassword", "", "gsafjaslfk", "gfdlskafdla"};
 
     static final int[] wifi_safety =
             new int[]{0,0,0,0,0,0};
@@ -127,7 +105,7 @@ public class FirstScenario extends ListActivity {
                 {
                     sendElapsedToServer();
                     Toast.makeText(getApplicationContext(), "connected to " + selectedValue, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(FirstScenario.this, SecondPrompt.class);
+                    Intent intent = new Intent(SixthScenario.this, EndScreen.class);
                     startActivity(intent);
                 }
             }
@@ -141,6 +119,9 @@ public class FirstScenario extends ListActivity {
         });
 
         password_query = builder.create();
+
+        addListenerOnButton();
+
     }
 
 
@@ -158,7 +139,7 @@ public class FirstScenario extends ListActivity {
         if(!wifi_private[position-1]) {
             sendElapsedToServer();
             Toast.makeText(this, "connected to " + selectedValue, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(FirstScenario.this, SecondPrompt.class);
+            Intent intent = new Intent(SixthScenario.this, EndScreen.class);
             startActivity(intent);
         }
 
@@ -173,16 +154,16 @@ public class FirstScenario extends ListActivity {
         long tEnd = System.currentTimeMillis();
         long tDelta = tEnd - tStart;
         double elapsedSeconds = tDelta / 1000.0;
-        Log.d("myTag", "took  " + elapsedSeconds + " time to complete scenario 1");
+        Log.d("myTag", "took  " + elapsedSeconds + " time to complete scenario 6");
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.put("scenario 1 wifi", selectedValue + " " + selectedStrength);
+            jsonObject.put("scenario 6 wifi", selectedValue + " " + selectedStrength);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
-            jsonObject.put("scenario 1 time",elapsedSeconds);
+            jsonObject.put("scenario 6 time",elapsedSeconds);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -190,6 +171,19 @@ public class FirstScenario extends ListActivity {
 
     }
 
+    public void addListenerOnButton() {
 
+        button = findViewById(R.id.button1);
 
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                //i want this to start qr code scanner
+                Intent intent = new Intent(SixthScenario.this, QrActivity.class);
+                startActivity(intent);
+            }
+
+        });
+    }
 }

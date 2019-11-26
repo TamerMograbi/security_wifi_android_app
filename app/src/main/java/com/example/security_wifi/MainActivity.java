@@ -38,13 +38,16 @@ public class MainActivity extends ListActivity {
     static final boolean[] wifi_private =
             new boolean[]{true, false, false, true};
 
+    static final int[] wifi_safety =
+            new int[]{0, 0, 0, 0};
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mSocket.connect();
 
-        setListAdapter(new MobileArrayAdapter(this, wifi_names, wifi_strengths, wifi_private));
+        setListAdapter(new MobileArrayAdapter(this, wifi_names, wifi_strengths, wifi_private, wifi_safety));
         TextView textView = new TextView(this);
         textView.setText("Available connections");
         textView.setHeight(200);
