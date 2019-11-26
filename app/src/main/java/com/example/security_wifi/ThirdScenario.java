@@ -46,6 +46,8 @@ public class ThirdScenario extends ListActivity {
 
     View blinker;
 
+    long tStart;
+
     {
         try {
             //try to visit this url on your laptop and see that clicking on a wifi updates
@@ -71,6 +73,7 @@ public class ThirdScenario extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third_scenario);
         mSocket.connect();
+        tStart = System.currentTimeMillis();
 
         final View blinker = findViewById(R.id.blinker);
         blinker.setVisibility(View.INVISIBLE);
@@ -171,6 +174,8 @@ public class ThirdScenario extends ListActivity {
                 if(password_input.equals(wifi_password))
                 {
                     Toast.makeText(getApplicationContext(), "connected to " + selectedValue, Toast.LENGTH_SHORT).show();
+                    sendElapsedToServer();
+
                     //Intent intent = new Intent(FirstScenario.this, SecondScenario.class);
                     //startActivity(intent);
                 }
@@ -185,6 +190,21 @@ public class ThirdScenario extends ListActivity {
         });
 
         password_query = builder.create();
+    }
+
+    public void sendElapsedToServer() {
+        long tEnd = System.currentTimeMillis();
+        long tDelta = tEnd - tStart;
+        double elapsedSeconds = tDelta / 1000.0;
+        Log.d("myTag", "took  " + elapsedSeconds + " time to complete scenario 3");
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("scenario 3",elapsedSeconds);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mSocket.emit("elapsed",jsonObject);
+
     }
 
     public void addListenerOnButton() {
@@ -215,6 +235,7 @@ public class ThirdScenario extends ListActivity {
 
         if(!wifi_private[position-1]) {
             Toast.makeText(this, "connected to " + selectedValue, Toast.LENGTH_SHORT).show();
+            sendElapsedToServer();
         }
 
         else{
