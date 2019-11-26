@@ -13,6 +13,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="Please wait for instructions before starting"
+        android:layout_marginTop="250dp"
         android:textSize="20sp" />
 
     <Button
